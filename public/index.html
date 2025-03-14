@@ -1,0 +1,42 @@
+<!-- The index.html file was created to display a simple form for users to input two numbers, n1 and n2.
+ They can then click the 'Add Numbers' button for the two numbers to be sent to the '/addTwoNumber' route as query parameters. The result returning n1 + n2 will then be displayed on the form  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Two Numbers</title>
+</head>
+<body>
+    <h1>Simple Addition</h1>
+    <form action="/addTwoNumber" method="get">
+        <label for="n1">First Number: </label>
+        <input type="number" id="n1" name="n1" required>
+        <br><br>
+        <label for="n2">Second Number: </label>
+        <input type="number" id="n2" name="n2" required>
+        <br><br>
+        <button type="submit">Add Numbers</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        // Fetch the result and display it
+        const form = document.querySelector('form');
+        form.onsubmit = async (event) => {
+            event.preventDefault();
+
+            const n1 = document.getElementById('n1').value;
+            const n2 = document.getElementById('n2').value;
+
+            const response = await fetch(`/addTwoNumber?n1=${n1}&n2=${n2}`);
+            const data = await response.json();
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `Result: ${data.data}`;
+        };
+    </script>
+</body>
+</html>
